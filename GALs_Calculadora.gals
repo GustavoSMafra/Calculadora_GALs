@@ -1,0 +1,46 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+Parser = SLR
+#RegularDefinitions
+
+#Tokens
+:[\n\s\r\t]*
+sum: "+"
+sub: "-"
+mult: "*"
+div: "/"
+exp: "^"
+igual: "="
+show: "Show"
+fim: ";"
+opar: "("
+cpar: ")"
+var: [A-Z]
+num: [0-1]+
+#NonTerminals
+<S>
+<A>
+<B>
+<C>
+<D>
+<E>
+<F>
+
+
+
+#Grammar
+<S> ::= <S><A> | <A>;
+<A> ::= <F> #10 igual <B> fim #9| show opar <F> cpar fim #8 | <B>;
+<B> ::= <B> sum <C> #7 | <B> sub <C> #6 | <C>;
+<C> ::= <C> mult <D> #5 | <C> div <D> #4 | <D>;
+<D> ::= <E> exp <E> #3 | <E>;
+<E> ::= opar <B> cpar | num #2 | var #1;
+<F> ::= var #10;
